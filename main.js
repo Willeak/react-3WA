@@ -1,5 +1,19 @@
-//const helloWorld = React.createElement('h1', {}, 'Hello world!');
+const lastName = React.createElement(
+  "span",
+  { className: "mycolor" },
+  "ducatez".toUpperCase()
+);
 
-const helloWorld = <h1>Hello world!</h1>;
+const firstName = React.createElement(
+  "span",
+  { className: "mycolor" },
+  "calvin".charAt(0).toUpperCase() + "calvin".slice(1)
+);
 
-ReactDOM.render(helloWorld, document.querySelector('#app'));
+const element = (
+  <p>
+    Bonjour, {lastName} {firstName}
+  </p>
+);
+
+ReactDOM.render(element, document.querySelector("#app"));
