@@ -6,7 +6,7 @@ const lastName = React.createElement(
 
 const firstName = React.createElement(
   "span",
-  { className: "mycolor" },
+  {},
   "calvin".charAt(0).toUpperCase() + "calvin".slice(1)
 );
 
