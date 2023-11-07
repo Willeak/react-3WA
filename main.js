@@ -1,39 +1,59 @@
-function UserGreeting(props) {
-    return <h1>Bienvenue !</h1>;
-  }
-  
-  function GuestGreeting(props) {
-    return <h1>Veuillez vous connecter</h1>;
-  }
-  function Greeting(props) {
-      const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+function App() {
+  const [data, setData] = React.useState([]);
 
-      const handleLogIn = (e) => {
-          e.preventDefault();
-          setIsLoggedIn(true);
-      }
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
-      const handleLogOut = (e) => {
-          e.preventDefault();
-          setIsLoggedIn(false);
-      }
+  React.useEffect(() => {
+    if (data.length > 0) {
+      // Les données ont changé, vous pouvez effectuer des actions ici si nécessaire.
+    }
+  }, [data]);
 
-    return(
-        <React.Fragment>
-            {isLoggedIn ? 
-            <React.Fragment>
-                <UserGreeting />
-                <button onClick={handleLogOut}>Se déconnecter</button>
-            </React.Fragment> : 
-            <React.Fragment>
-                <GuestGreeting />
-                <button onClick={handleLogIn}>Se connecter</button>
-            </React.Fragment> }
-        </React.Fragment>
-    )
-  }
-  
-  ReactDOM.render(
-    <Greeting />,
-    document.querySelector('#app')
+  React.useEffect(() => {
+    return () => {
+      // Vous pouvez effectuer des nettoyages ici si nécessaire.
+    };
+  }, []);
+
+  const fetchData = () => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("La requête a échoué");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+
+        console.log(data);
+      })
+      .catch((error) => {});
+  };
+
+  return (
+    <div>
+      <ul>
+        {data.map((user) => (
+          <li key={user.id}>
+            {user.name}
+            <br />
+            {user.email}
+            <br />
+            {data[0].company.name}
+            <br />
+            {user.phone}
+            <br />
+            {user.website}
+            <br /> <br />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
+}
+
+ReactDOM.render(<App />, document.querySelector("#app"));
